@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+int main() {
+    // Массив строк, представляющий содержание файла
+    char lines[5][40] = {
+        "/FILESMERTI.exe",
+        "monaco",
+        "practica",
+        "Slavchik",
+        "ladasu"
+    };
+
+    // Печатаем предупреждение и имя файла
+    printf("НЕ ОТКРЫВАЙТЕ ФАЙЛ: %s\n", lines[0]);
+
+    // Переменная для хранения всего содержимого файла
+    char content[100];
+    int index = 0;
+
+    // Собираем все строки вместе, формируя единое содержимое
+    for (int i = 1; i < 5; i++) {
+        int j = 0;
+        while (lines[i][j] != '\0') {
+            content[index++] = lines[i][j++];
+        }
+        content[index++] = '\n';
+    }
+    content[index] = '\0';
+
+    // Выводим всё собранное содержимое
+    printf("\nСОДЕРЖИМОЕ ФАЙЛА:\n%s", content);
+
+    // Теперь проверим, есть ли нужное нам слово в содержании
+    char target[] = "Slavchik";
+
+    // Узнаём длину содержимого и целевого слова
+    int contentLength = 0;
+    while (content[contentLength] != '\0') {
+        contentLength++;
+    }
+
+    int targetLength = 0;
+    while (target[targetLength] != '\0') {
+        targetLength++;
+    }
+
+    // Перебор символов для поиска нужного слова
+    int found = 0;
+    for (int i = 0; i <= contentLength - targetLength; i++) {
+        int match = 1;
+        for (int j = 0; j < targetLength; j++) {
+            if (content[i + j] != target[j]) {
+                match = 0;
+                break;
+            }
+        }
+        if (match == 1) {
+            found = 1;
+            break;
+        }
+    }
+
+    // Сообщаем результат проверки
+    if (found) {
+        printf("\nСтрока \"%s\" найдена в файле!\n", target);
+    } else {
+        printf("\nСтрока \"%s\" не найдена в файле.\n", target);
+    }
+
+    return 0;
+}
